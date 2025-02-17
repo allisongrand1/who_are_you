@@ -1,0 +1,106 @@
+# Environment
+.env
+*.env.local
+
+# Keys/Certs
+*.pem
+*.key
+*.crt
+
+# Credentials
+aws_credentials.csv
+service-account.json
+
+# Logs/Dumps
+*.log
+*.sql
+*.dump
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.vscode/
+.vscode/launch.json
+migrate_working_dir/
+.fvm/
+.fvmrc
+
+#Firebase related
+/android/app/google-services.json
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.classpath
+.project
+.settings/
+.vscode/
+.templates
+create-template.js
+package-lock.json
+package.json
+node_modules/
+
+# packages file containing multi-root paths
+.packages.generated
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+*/**/build/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+pubspec.lock
+
+# FVM Version Cache
+.fvm/
+/.fvmrc
+
+# Android related
+**/android/.gradle/
+**/android/buildSrc/.gradle/
+**/android/buildSrc/build/
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/keystore.properties
+*.jks
+
+# Symbols
+app.*.symbols
+
+# Ignore generated files by Freezed and JSON serialization
+*.freezed.dart
+*.g.dart
+
+# Xcode
+**/*.xcuserstate
+**/*.xcuserdatad/
+**/*.xccheckout
+**/*.xcscmblueprint
+**/*.xcworkspace/
+**/xcuserdata/
+**/Pods/
+**/DerivedData/
+**/build/
+
+# macOS
+**/.DS_Store
