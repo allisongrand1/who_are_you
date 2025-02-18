@@ -4,8 +4,7 @@
 
 ## Ссылки на ресурсы
 
-- [CodeChat api]()
-- [CodeChat design]()
+-
 
 ## Параметры окружения
 
@@ -26,12 +25,7 @@ fvm flutter pub get
 // В случае когда анализатор ругается на отсутствие релизаций
 // этих моделей:
 
-fvm flutter pub run build_runner build
-
-// Если происходит ошибка при построении графа - сделать
-// генерацию с удаление старого кода
-
-fvm flutter pub run build_runner build -d
+fvm flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## ios
