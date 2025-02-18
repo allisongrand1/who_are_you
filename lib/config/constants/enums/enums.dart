@@ -1,0 +1,4 @@
+enum ImageNumber {
+  first,
+  second,
+}
