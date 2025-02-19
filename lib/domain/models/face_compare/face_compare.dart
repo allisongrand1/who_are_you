@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class FaceCompare extends Equatable {
   final String requestId;
   final int timeUsed;
-  final String confidence;
+  final double confidence;
   final String? errorMessage;
 
   const FaceCompare({

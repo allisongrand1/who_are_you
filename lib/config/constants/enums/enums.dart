@@ -1,4 +1,0 @@
-enum ImageNumber {
-  first,
-  second,
-}

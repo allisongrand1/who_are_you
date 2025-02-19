@@ -22,12 +22,12 @@ class LoadImageUseCase {
       await storage.setString(key: 'photo', value: pickedFile.path);
 
       _image = File(pickedFile.path);
-      _result = "Фото загружено! Нажмите 'Анализировать'";
+      _result = "Фото загружено! Нажми 'Анализировать'";
 
       return (result: _result, image: _image);
     }
 
-    _result = "Ошибка загрузки";
+    _result = 'Ошибка загрузки';
 
     return (result: _result, image: null);
   }

@@ -22,17 +22,19 @@ class _MainShellScreenState extends State<MainShellScreen> {
       body: Row(
         children: [
           NavigationRail(
+            groupAlignment: 0,
             onDestinationSelected: goIndex,
+            labelType: NavigationRailLabelType.all,
             destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.favorite_border),
-                selectedIcon: Icon(Icons.favorite),
-                label: Text('First'),
+                icon: Icon(Icons.face_retouching_natural),
+                selectedIcon: Icon(Icons.face_retouching_natural_rounded),
+                label: Text('Определи'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.bookmark_border),
-                selectedIcon: Icon(Icons.book),
-                label: Text('Second'),
+                icon: Icon(Icons.people),
+                selectedIcon: Icon(Icons.people_rounded),
+                label: Text('Сравни'),
               ),
             ],
             selectedIndex: currentIndex,
@@ -50,7 +52,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
   void goIndex(int index) {
     widget.navigationShell.goBranch(
       index,
-      initialLocation: index == widget.navigationShell.currentIndex,
+      initialLocation: index == currentIndex,
     );
   }
 }

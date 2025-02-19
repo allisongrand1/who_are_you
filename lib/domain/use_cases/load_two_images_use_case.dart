@@ -13,29 +13,33 @@ class LoadTwoImagesUseCase {
   }
 
   final Set<File> _images = {};
-  String _result = '';
 
   Future<LoadedImages> call(int numberImage) async {
+    if (_images.length == 2) {
+      _images.clear();
+    }
+
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       await storage.setString(key: 'photo-$numberImage', value: pickedFile.path);
 
+      final result = switch (numberImage) {
+        0 => 'Фото загружено! Добавь еще одно фото для сравнения',
+        _ => 'Фотографии загружены',
+      };
+
       if (numberImage == 0) {
         _images.add(File(pickedFile.path));
-        _result = "Фото загружено! Добавьте еще одно фото для сравнения";
 
-        return (result: _result, images: _images);
+        return (result: result, images: _images);
       }
 
       _images.add(File(pickedFile.path));
-      _result = "Фотографии загружены";
 
-      return (result: _result, images: _images);
+      return (result: result, images: _images);
     }
 
-    _result = "Ошибка загрузки";
-
-    return (result: _result, images: null);
+    return (result: 'Ошибка загрузки', images: null);
   }
 }

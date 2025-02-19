@@ -26,10 +26,12 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvents, FaceDetectionStates> {
     final infoDetection = await loadImageUseCase.call();
 
     if (infoDetection.image != null) {
-      emit(FaceDetectionStates.loaded(
-        info: infoDetection.result,
-        image: infoDetection.image!,
-      ));
+      emit(
+        FaceDetectionStates.loaded(
+          info: infoDetection.result,
+          image: infoDetection.image!,
+        ),
+      );
     } else {
       emit(FaceDetectionStates.error(errorMessage: infoDetection.result));
     }
@@ -39,10 +41,12 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvents, FaceDetectionStates> {
     final infoDetection = await analyzeImageUseCase.call();
 
     if (infoDetection.image != null) {
-      emit(FaceDetectionStates.loaded(
-        info: infoDetection.result,
-        image: infoDetection.image!,
-      ));
+      emit(
+        FaceDetectionStates.loaded(
+          info: infoDetection.result,
+          image: infoDetection.image!,
+        ),
+      );
     } else {
       emit(FaceDetectionStates.error(errorMessage: infoDetection.result));
     }
