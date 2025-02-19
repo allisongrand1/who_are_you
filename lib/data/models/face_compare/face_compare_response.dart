@@ -10,7 +10,7 @@ class FaceCompareResponse with _$FaceCompareResponse {
   const factory FaceCompareResponse({
     @Default('') @JsonKey(name: 'request_id') String requestId,
     @Default(0) @JsonKey(name: 'time_used') int timeUsed,
-    @Default('') String confidence,
+    @Default(0.0) double confidence,
     @JsonKey(name: 'error_message') String? errorMessage,
   }) = _FaceCompareResponse;
 

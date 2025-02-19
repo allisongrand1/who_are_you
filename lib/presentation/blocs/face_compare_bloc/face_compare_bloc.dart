@@ -15,7 +15,7 @@ class FaceCompareBloc extends Bloc<FaceCompareEvents, FaceCompareStates> {
     on<FaceCompareEvents>(
       (event, emit) => event.map(
         loadImages: (event) => _loadImages(event, emit),
-        analyzeImages: (event) => _analyzeImage(event, emit),
+        analyzeImages: (event) => _analyzeImages(event, emit),
       ),
     );
   }
@@ -26,23 +26,27 @@ class FaceCompareBloc extends Bloc<FaceCompareEvents, FaceCompareStates> {
     final infoCompare = await loadTwoImagesUseCase.call(event.imageNumber);
 
     if (infoCompare.images != null) {
-      emit(FaceCompareStates.loaded(
-        info: infoCompare.result,
-        images: infoCompare.images!,
-      ));
+      emit(
+        FaceCompareStates.loaded(
+          info: infoCompare.result,
+          images: infoCompare.images!,
+        ),
+      );
     } else {
       emit(FaceCompareStates.error(errorMessage: infoCompare.result));
     }
   }
 
-  Future<void> _analyzeImage(AnalyzeImagesEvent event, Emitter<FaceCompareStates> emit) async {
+  Future<void> _analyzeImages(AnalyzeImagesEvent event, Emitter<FaceCompareStates> emit) async {
     final infoCompare = await analyzeTwoImagesUseCase.call();
 
     if (infoCompare.images != null) {
-      emit(FaceCompareStates.loaded(
-        info: infoCompare.result,
-        images: infoCompare.images!,
-      ));
+      emit(
+        FaceCompareStates.loaded(
+          info: infoCompare.result,
+          images: infoCompare.images!,
+        ),
+      );
     } else {
       emit(FaceCompareStates.error(errorMessage: infoCompare.result));
     }

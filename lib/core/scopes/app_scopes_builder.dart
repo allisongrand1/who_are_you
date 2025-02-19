@@ -20,13 +20,13 @@ class _BaseAppScopesBuilder implements AppScopesBuilder {
 
     final repositoriesScope = RepositoriesScope.create(dataSourcesScope: dataSourcesScope);
 
-    final blocScope =
-        BlocScope.create(dataSourcesScope: dataSourcesScope, repositoriesScope: repositoriesScope, storage: storage);
+    final blocScope = BlocScope.create(repositoriesScope: repositoriesScope, storage: storage);
 
     return AppScopes(
       dataSourcesScope: dataSourcesScope,
       repositoriesScope: repositoriesScope,
       blocScope: blocScope,
+      storage: storage,
     );
   }
 }

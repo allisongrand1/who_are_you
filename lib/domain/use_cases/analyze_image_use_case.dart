@@ -25,8 +25,8 @@ class AnalyzeImageUseCase {
             'Пол: ${detectFace.faces.first.attributes.gender.value}, Возраст: ${detectFace.faces.first.attributes.age.value}';
 
         return (result: _result, image: image);
-      } catch (e) {
-        return (result: 'Ошибка загрузки: ${e.toString()}', image: null);
+      } on Object catch (_) {
+        return (result: 'Не получилось проанализировать =(', image: image);
       }
     }
 

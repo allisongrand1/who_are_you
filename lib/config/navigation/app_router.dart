@@ -27,7 +27,7 @@ class AppRouter {
                 GoRoute(
                   path: AppRoutes.faceAttributes.path,
                   name: AppRoutes.faceAttributes.name,
-                  builder: (context, state) => FaceDetectionScreen(),
+                  builder: (context, state) => const FaceDetectionScreen(),
                 ),
               ],
             ),
@@ -36,7 +36,7 @@ class AppRouter {
                 GoRoute(
                   path: AppRoutes.twoFaces.path,
                   name: AppRoutes.twoFaces.name,
-                  builder: (context, state) => FaceCompareScreen(),
+                  builder: (context, state) => const FaceCompareScreen(),
                 ),
               ],
             ),

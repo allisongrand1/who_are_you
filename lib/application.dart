@@ -9,6 +9,7 @@ import 'package:who_are_you/core/scopes/app_scopes_builder.dart';
 import 'package:who_are_you/core/scopes/bloc_scope.dart';
 import 'package:who_are_you/core/scopes/data_source_scope.dart';
 import 'package:who_are_you/core/scopes/repositories_scope.dart';
+import 'package:who_are_you/data/storage/storage.dart';
 
 class Application extends StatefulWidget {
   final InfrastructureInterface infrastructureInterface;
@@ -30,6 +31,7 @@ class _ApplicationState extends State<Application> {
   late final RepositoriesScope _repositoriesScope;
   late final DataSourcesScope _dataSourcesScope;
   late final BlocScope _blocScope;
+  late final Storage _storage;
 
   @override
   void initState() {
@@ -39,6 +41,13 @@ class _ApplicationState extends State<Application> {
 
     router = AppRouter.routerConfig();
     theme = ThemeFactory.createTheme(Theme.light);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _storage.clear();
   }
 
   @override
@@ -69,5 +78,6 @@ class _ApplicationState extends State<Application> {
     _repositoriesScope = scopes.repositoriesScope;
     _dataSourcesScope = scopes.dataSourcesScope;
     _blocScope = scopes.blocScope;
+    _storage = scopes.storage;
   }
 }

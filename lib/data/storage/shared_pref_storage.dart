@@ -20,4 +20,9 @@ class SharedPrefStorage implements Storage {
   Future<void> init() async {
     preferences = await SharedPreferences.getInstance();
   }
+
+  @override
+  Future<void> clear() async {
+    await preferences.clear();
+  }
 }

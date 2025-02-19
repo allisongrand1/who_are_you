@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:who_are_you/core/environment/environment.dart';
+import 'package:who_are_you/data/data_sources/face_detection_data_source.dart';
 import 'package:who_are_you/data/endpoint.dart';
-import 'package:who_are_you/data/face_detection_data_source.dart';
 import 'package:who_are_you/data/mappers/face_compare_mapper.dart';
 import 'package:who_are_you/data/mappers/face_detection_mapper.dart';
 import 'package:who_are_you/data/models/face_compare/face_compare_response.dart';
@@ -17,10 +19,10 @@ class FaceDetectionDataSourceImpl extends FaceDetectionDataSource {
   @override
   Future<FaceDetection> detectFace(String imagePath) async {
     final formData = FormData.fromMap({
-      "api_key": Environment.apiKey,
-      "api_secret": Environment.apiSecret,
-      "image_file": await MultipartFile.fromFile(imagePath),
-      "return_attributes": "gender,age,emotion",
+      'api_key': Environment.apiKey,
+      'api_secret': Environment.apiSecret,
+      'image_file': await MultipartFile.fromFile(imagePath),
+      'return_attributes': 'gender,age,emotion',
     });
 
     final response = await dio.post(detect, data: formData);
@@ -29,15 +31,12 @@ class FaceDetectionDataSourceImpl extends FaceDetectionDataSource {
   }
 
   @override
-  Future<FaceCompare> compareFaces({
-    required String firstImagePath,
-    required String secondImagePath,
-  }) async {
+  Future<FaceCompare> compareFaces({required Set<File> images}) async {
     final formData = FormData.fromMap({
-      "api_key": Environment.apiKey,
-      "api_secret": Environment.apiSecret,
-      "image_file1": await MultipartFile.fromFile(firstImagePath),
-      "image_file2": await MultipartFile.fromFile(secondImagePath),
+      'api_key': Environment.apiKey,
+      'api_secret': Environment.apiSecret,
+      'image_file1': await MultipartFile.fromFile(images.first.path),
+      'image_file2': await MultipartFile.fromFile(images.last.path),
     });
 
     final response = await dio.post(compare, data: formData);
