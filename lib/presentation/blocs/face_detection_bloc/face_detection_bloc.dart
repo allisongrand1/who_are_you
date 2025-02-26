@@ -1,16 +1,22 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:who_are_you/domain/use_cases/analyze_image_use_case.dart';
 import 'package:who_are_you/domain/use_cases/load_image_use_case.dart';
+import 'package:who_are_you/domain/use_cases/pick_image_use_case.dart';
 import 'package:who_are_you/presentation/blocs/face_detection_bloc/face_detection_events.dart';
 import 'package:who_are_you/presentation/blocs/face_detection_bloc/face_detection_states.dart';
 
 class FaceDetectionBloc extends Bloc<FaceDetectionEvents, FaceDetectionStates> {
   final LoadImageUseCase loadImageUseCase;
   final AnalyzeImageUseCase analyzeImageUseCase;
+  final PickImageUseCase pickImageUseCase;
 
   FaceDetectionBloc(
     this.loadImageUseCase,
     this.analyzeImageUseCase,
+    this.pickImageUseCase,
   ) : super(FaceDetectionStates.init()) {
     on<FaceDetectionEvents>(
       (event, emit) => event.map(
@@ -21,34 +27,39 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvents, FaceDetectionStates> {
   }
 
   Future<void> _loadImage(LoadImageEvent event, Emitter<FaceDetectionStates> emit) async {
-    emit(FaceDetectionStates.loading('Фото загружается...'));
+    emit(FaceDetectionStates.loading(message: 'Фото загружается...'));
 
-    final infoDetection = await loadImageUseCase.call();
+    final file = await pickImageUseCase.call();
 
-    if (infoDetection.image != null) {
+    if (file.image != null) {
+      final image = await loadImageUseCase.call(file.image);
+
       emit(
         FaceDetectionStates.loaded(
-          info: infoDetection.result,
-          image: infoDetection.image!,
+          image: file.image!.path,
+          info: image.result,
         ),
       );
     } else {
-      emit(FaceDetectionStates.error(errorMessage: infoDetection.result));
+      emit(FaceDetectionStates.error(errorMessage: file.result));
     }
   }
 
   Future<void> _analyzeImage(AnalyzeImageEvent event, Emitter<FaceDetectionStates> emit) async {
-    final infoDetection = await analyzeImageUseCase.call();
+    log('${state} : ${state.image}');
+    emit(FaceDetectionStates.loading(message: 'Анализирую...', image: state.image));
 
-    if (infoDetection.image != null) {
+    if (state.image.isNotEmpty) {
+      final file = await analyzeImageUseCase.call(File(state.image));
+
       emit(
         FaceDetectionStates.loaded(
-          info: infoDetection.result,
-          image: infoDetection.image!,
+          info: file.result,
+          image: state.image,
         ),
       );
     } else {
-      emit(FaceDetectionStates.error(errorMessage: infoDetection.result));
+      emit(FaceDetectionStates.error(errorMessage: 'Добавьте фото'));
     }
   }
 }

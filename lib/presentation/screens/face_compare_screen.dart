@@ -21,40 +21,39 @@ class FaceCompareScreen extends StatelessWidget {
         ),
       ),
       body: DecorationBox(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  UploadBoxButton(
-                    onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.loadImages(0)),
-                    indexButton: 0,
-                  ),
-                  const SizedBox(width: 15),
-                  UploadBoxButton(
-                    onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.loadImages(1)),
-                    indexButton: 1,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              AnalyzeImageButton(
-                onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.analyzeImages()),
-              ),
-              const SizedBox(height: 20),
-              BlocBuilder<FaceCompareBloc, FaceCompareStates>(
-                builder: (context, state) {
-                  return state.mapOrElse(
-                    loaded: (state) => Text(state.info, textAlign: TextAlign.center),
-                    error: (state) => Text(state.errorMessage, textAlign: TextAlign.center),
-                    orElse: () => const SizedBox(height: 10),
-                  );
-                },
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                UploadBoxButton(
+                  onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.loadImages(0)),
+                  indexButton: 0,
+                ),
+                const SizedBox(width: 15),
+                UploadBoxButton(
+                  onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.loadImages(1)),
+                  indexButton: 1,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            AnalyzeImageButton(
+              onTap: () => context.read<FaceCompareBloc>().add(FaceCompareEvents.analyzeImages()),
+            ),
+            const SizedBox(height: 20),
+            BlocBuilder<FaceCompareBloc, FaceCompareStates>(
+              builder: (context, state) {
+                return state.mapOrElse(
+                  loading: (state) => Text(state.info ?? '', textAlign: TextAlign.center),
+                  loaded: (state) => Text(state.info ?? '', textAlign: TextAlign.center),
+                  error: (state) => Text(state.errorMessage ?? '', textAlign: TextAlign.center),
+                  orElse: () => const SizedBox(height: 10),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

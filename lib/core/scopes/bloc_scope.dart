@@ -4,6 +4,7 @@ import 'package:who_are_you/domain/use_cases/analyze_image_use_case.dart';
 import 'package:who_are_you/domain/use_cases/analyze_two_images_use_case.dart';
 import 'package:who_are_you/domain/use_cases/load_image_use_case.dart';
 import 'package:who_are_you/domain/use_cases/load_two_images_use_case.dart';
+import 'package:who_are_you/domain/use_cases/pick_image_use_case.dart';
 import 'package:who_are_you/presentation/blocs/face_compare_bloc/face_compare_bloc.dart';
 import 'package:who_are_you/presentation/blocs/face_detection_bloc/face_detection_bloc.dart';
 
@@ -22,18 +23,20 @@ class BlocScope {
   }) {
     return BlocScope(
       faceDetectionBloc: FaceDetectionBloc(
-        LoadImageUseCase(storage),
+        LoadImageUseCase(),
         AnalyzeImageUseCase(
           repository: repositoriesScope.faceDetectionRepository,
           storage: storage,
         ),
+        PickImageUseCase(),
       ),
       faceCompareBloc: FaceCompareBloc(
-        LoadTwoImagesUseCase(storage),
+        LoadTwoImagesUseCase(),
         AnalyzeTwoImagesUseCase(
           repository: repositoriesScope.faceDetectionRepository,
           storage: storage,
         ),
+        PickImageUseCase(),
       ),
     );
   }

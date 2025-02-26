@@ -24,15 +24,13 @@ class UploadBoxButton extends StatelessWidget {
           ),
           child: BlocBuilder<FaceCompareBloc, FaceCompareStates>(
             builder: (context, state) {
-              if (state is LoadedFaceCompareState) {
-                final image = state.images.elementAtOrNull(indexButton);
+              final image = state.images.elementAtOrNull(indexButton);
 
-                if (image != null) {
-                  return Image.file(
-                    image,
-                    fit: BoxFit.cover,
-                  );
-                }
+              if (image != null) {
+                return Image.file(
+                  image,
+                  fit: BoxFit.cover,
+                );
               }
               return const Center(
                 child: Column(
@@ -46,25 +44,6 @@ class UploadBoxButton extends StatelessWidget {
                   ],
                 ),
               );
-
-              // return state.mapOrElse(
-              //   loaded: (state) => Image.file(
-              //     state.images.first,
-              //     fit: BoxFit.cover,
-              //   ),
-              //   orElse: () => const Center(
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Icon(
-              //           Icons.photo,
-              //           color: Colors.black45,
-              //         ),
-              //         Text('Выбери фото'),
-              //       ],
-              //     ),
-              //   ),
-              // );
             },
           ),
         ),

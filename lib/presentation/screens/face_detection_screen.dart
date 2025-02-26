@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:who_are_you/presentation/blocs/face_detection_bloc/face_detection_bloc.dart';
@@ -29,7 +31,12 @@ class FaceDetectionScreen extends StatelessWidget {
                 builder: (context, state) {
                   return state.mapOrElse(
                     loading: (state) => const CircularProgressIndicator(),
-                    loaded: (state) => Image.file(state.image, height: 200),
+                    loaded: (state) => state.image.isNotEmpty
+                        ? Image.file(
+                            File(state.image),
+                            height: 200,
+                          )
+                        : const SizedBox.shrink(),
                     orElse: () => const Text('Выберите фото'),
                   );
                 },
@@ -46,9 +53,9 @@ class FaceDetectionScreen extends StatelessWidget {
               BlocBuilder<FaceDetectionBloc, FaceDetectionStates>(
                 builder: (context, state) {
                   return state.mapOrElse(
-                    loading: (state) => Text(state.message, textAlign: TextAlign.center),
-                    loaded: (state) => Text(state.info, textAlign: TextAlign.center),
-                    error: (state) => Text(state.errorMessage, textAlign: TextAlign.center),
+                    loading: (state) => Text(state.info ?? '', textAlign: TextAlign.center),
+                    loaded: (state) => Text(state.info ?? '', textAlign: TextAlign.center),
+                    error: (state) => Text(state.errorMessage ?? '', textAlign: TextAlign.center),
                     orElse: () => const SizedBox.shrink(),
                   );
                 },

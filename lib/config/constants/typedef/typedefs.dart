@@ -1,8 +1,11 @@
 import 'dart:io';
 
-typedef LoadedImage = ({String result, File? image});
+typedef AnalyzeImage = ({String result});
 
-typedef LoadedImages = ({
-  String result,
-  Set<File>? images,
-});
+typedef LoadedImage = ({String result});
+
+typedef AnalyzeTwoImages = ({String result});
+
+typedef LoadedTwoImages = ({String result, List<File?> images});
+
+typedef PickImage = ({String result, File? image});

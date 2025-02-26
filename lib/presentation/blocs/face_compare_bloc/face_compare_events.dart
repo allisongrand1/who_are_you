@@ -4,9 +4,9 @@ sealed class FaceCompareEvents {
 }
 
 class LoadImagesEvent extends FaceCompareEvents {
-  final int imageNumber;
+  final int index;
 
-  LoadImagesEvent(this.imageNumber);
+  LoadImagesEvent(this.index);
 }
 
 class AnalyzeImagesEvent extends FaceCompareEvents {}

@@ -10,26 +10,15 @@ class AnalyzeImageUseCase {
 
   AnalyzeImageUseCase({required this.repository, required this.storage});
 
-  String _result = '';
+  Future<AnalyzeImage> call(File image) async {
+    final detectFace = await repository.detectFaceInfo(image);
 
-  Future<LoadedImage> call() async {
-    final path = await storage.getString(key: 'photo');
-
-    if (path != null) {
-      final image = File(path);
-
-      try {
-        final detectFace = await repository.detectFaceInfo(image);
-
-        _result =
-            'Пол: ${detectFace.faces.first.attributes.gender.value}, Возраст: ${detectFace.faces.first.attributes.age.value}';
-
-        return (result: _result, image: image);
-      } on Object catch (_) {
-        return (result: 'Не получилось проанализировать =(', image: image);
-      }
-    }
-
-    return (result: 'Ошибка загрузки', image: null);
+    return detectFace.fold(
+      left: (failure) => (result: failure.message),
+      right: (success) => (
+        result:
+            'Пол: ${success.faces.first.attributes.gender.value}, Возраст: ${success.faces.first.attributes.age.value}'
+      ),
+    );
   }
 }

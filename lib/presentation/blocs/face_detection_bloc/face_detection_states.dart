@@ -1,39 +1,44 @@
-import 'dart:io';
-
 sealed class FaceDetectionStates {
-  static FaceDetectionStates init() => InitFaceDetectionState();
+  final String image;
+  final String? info;
+  final String? errorMessage;
 
-  static FaceDetectionStates loading(String message) => LoadingFaceDetectionState(message);
+  const FaceDetectionStates({
+    this.image = '',
+    this.info = '',
+    this.errorMessage = '',
+  });
 
-  static FaceDetectionStates loaded({required String info, required File image}) =>
+  static FaceDetectionStates init() => InitFaceDetectionState(image: '');
+
+  static FaceDetectionStates loading({String? message, String? image}) => LoadingFaceDetectionState(
+        info: message,
+        image: image ?? '',
+      );
+
+  static FaceDetectionStates loaded({required String info, required String image}) =>
       LoadedFaceDetectionState(image: image, info: info);
 
-  static FaceDetectionStates error({required String errorMessage, File? image}) => ErrorFaceDetectionState(
+  static FaceDetectionStates error({required String errorMessage, String? image}) => ErrorFaceDetectionState(
         errorMessage: errorMessage,
-        image: image,
+        image: image ?? '',
       );
 }
 
-class InitFaceDetectionState extends FaceDetectionStates {}
+class InitFaceDetectionState extends FaceDetectionStates {
+  InitFaceDetectionState({required super.image});
+}
 
 class LoadingFaceDetectionState extends FaceDetectionStates {
-  final String message;
-
-  LoadingFaceDetectionState(this.message);
+  LoadingFaceDetectionState({required super.image, super.info});
 }
 
 class LoadedFaceDetectionState extends FaceDetectionStates {
-  final String info;
-  final File image;
-
-  LoadedFaceDetectionState({required this.image, required this.info});
+  LoadedFaceDetectionState({required super.image, super.info});
 }
 
 class ErrorFaceDetectionState extends FaceDetectionStates {
-  final String errorMessage;
-  final File? image;
-
-  ErrorFaceDetectionState({required this.errorMessage, this.image});
+  ErrorFaceDetectionState({super.image, super.errorMessage});
 }
 
 extension FaceDetectionStatesExtension<T> on FaceDetectionStates {
